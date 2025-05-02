@@ -22,6 +22,7 @@ import Men from "./pages/MenCollection/Men";
 import Women from "./pages/WomenCollections/Women";
 import Children from "./pages/ChildrenCollection/Children";
 import Cart from "./pages/Cart/Cart";
+import { SingleProduct } from "./components/product/SingleProduct";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
 
             {/* Products Categories */}
             <Route path="/products/men" element={<Men />} />
+            <Route path="/products/:id" element={<SingleProduct />} />
             <Route path="/products/women" element={<Women />} />
             <Route path="/products/children" element={<Children />} />
 

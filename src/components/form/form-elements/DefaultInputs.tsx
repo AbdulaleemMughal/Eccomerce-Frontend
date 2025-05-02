@@ -7,25 +7,30 @@ import DatePicker from "../date-picker.tsx";
 import TextArea from "../input/TextArea.tsx";
 import FileInput from "../input/FileInput.tsx";
 import MultiSelect from "../MultiSelect.tsx";
-import { multiOptions, options } from "../../../utils/options.ts";
+import { colorOptions, multiOptions, options } from "../../../utils/options.ts";
 import Select from "../Select.tsx";
 import Button from "../../ui/button/Button.tsx";
+import axios from "axios";
+import { BASE_URL } from "../../../utils/constant.ts";
+import { ProductInterface } from "../../../interfaces/Data.interface.ts";
 
 export default function DefaultInputs() {
-  const [message, setMessage] = useState("");
-  const [category, setCategory] = useState("");
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [data, setData] = useState<ProductInterface | null>(null);
+  // const [message, setMessage] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      console.log("Selected file:", file.name);
-    }
-  };
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     console.log("Selected file:", file.name);
+  //   }
+  // };
 
-  const handleSelectChange = (value: string) => {
-    setCategory(value);
-    console.log("Selected value:", value);
+  const handleSelectChange = (value: string) => {};
+
+  const handleAddProduct = async () => {
+    const response = await axios.post(BASE_URL + "/add-product", {});
   };
 
   return (
@@ -33,7 +38,12 @@ export default function DefaultInputs() {
       <div className="space-y-6">
         <div>
           <Label htmlFor="input">Name</Label>
-          <Input type="text" id="input" placeholder="Enter the name" />
+          <Input
+            type="text"
+            id="input"
+            placeholder="Enter the name"
+            value={data?.title}
+          />
         </div>
         <div>
           <Label htmlFor="inputTwo">Price</Label>
@@ -41,6 +51,7 @@ export default function DefaultInputs() {
             type="number"
             id="inputTwo"
             placeholder="Enter the total price"
+            value={data?.price}
           />
         </div>
         <div>
@@ -49,19 +60,27 @@ export default function DefaultInputs() {
             type="number"
             id="inputTwo"
             placeholder="Enter the discounted price"
+            value={data?.discountedPrice}
           />
         </div>
         <div>
           <Label>Description</Label>
-          <TextArea
-            value={message}
-            onChange={(value) => setMessage(value)}
-            rows={6}
+          <TextArea rows={6} value={data?.description} />
+        </div>
+        <div>
+          <MultiSelect
+            label="Available Colors"
+            options={colorOptions}
+            defaultSelected={data?.colors}
           />
+          <p className="sr-only">
+            {/* Selected Values:  */}
+            {/* {selectedValues.join(", ")} */}
+          </p>
         </div>
         <div>
           <Label>Upload Image</Label>
-          <FileInput onChange={handleFileChange} className="custom-class" />
+          <FileInput className="custom-class" />
         </div>
         <div>
           <Label>Select Category</Label>
@@ -74,13 +93,13 @@ export default function DefaultInputs() {
         </div>
         <div>
           <MultiSelect
-            label="Availabel Sizes"
+            label="Available Sizes"
             options={multiOptions}
             defaultSelected={["small", "medium"]}
-            onChange={(values) => setSelectedValues(values)}
           />
           <p className="sr-only">
-            Selected Values: {selectedValues.join(", ")}
+            {/* Selected Values:  */}
+            {/* {selectedValues.join(", ")} */}
           </p>
         </div>
 

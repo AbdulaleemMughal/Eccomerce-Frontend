@@ -11,3 +11,9 @@ export const options = [
   { value: "womens", label: "Womens" },
   { value: "childrens", label: "Childrens" },
 ];
+
+export const colorOptions = [
+  { value: "red", text: "Red" },
+  { value: "green", text: "Green" },
+  { value: "black", text: "Black" },
+];
