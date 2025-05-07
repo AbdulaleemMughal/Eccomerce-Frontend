@@ -19,64 +19,66 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import Men from "./pages/MenCollection/Men";
-import Women from "./pages/WomenCollections/Women";
-import Children from "./pages/ChildrenCollection/Children";
-import Cart from "./pages/Cart/Cart";
 import { SingleProduct } from "./components/product/SingleProduct";
+import { appStore } from "./store/appStore";
+import { Provider } from "react-redux";
+import { ProductProvider } from "./context/ProductContext";
 
 export default function App() {
+
   return (
     <>
-      <Router>
-        <ScrollToTop />
-        <Routes>
-          {/* Dashboard Layout */}
-          <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
+      <Provider store={appStore}>
+        <ProductProvider>
+          <Router>
+            <ScrollToTop />
+            <Routes>
+              {/* Dashboard Layout */}
+              <Route index path="/" element={<SignIn />} />
+              <Route element={<AppLayout />}>
+                <Route path="/dashboard" element={<Home />} />
 
-            {/* Products Categories */}
-            <Route path="/products/men" element={<Men />} />
-            <Route path="/products/:id" element={<SingleProduct />} />
-            <Route path="/products/women" element={<Women />} />
-            <Route path="/products/children" element={<Children />} />
+                {/* Products Categories */}
+                <Route path="/products/men" element={<Men />} />
+                <Route path="/products/:id" element={<SingleProduct />} />
+                {/* Cart */}
 
-            {/* Cart */}
-            <Route path="/product/cart" element={<Cart />} />
+                {/* Checkout */}
 
-            {/* Checkout */}
+                {/* Others Page */}
+                <Route path="/profile" element={<UserProfiles />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/blank" element={<Blank />} />
 
-            {/* Others Page */}
-            <Route path="/profile" element={<UserProfiles />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/blank" element={<Blank />} />
+                {/* Forms */}
+                <Route path="/form-elements" element={<FormElements />} />
 
-            {/* Forms */}
-            <Route path="/form-elements" element={<FormElements />} />
+                {/* Tables */}
+                <Route path="/basic-tables" element={<BasicTables />} />
 
-            {/* Tables */}
-            <Route path="/basic-tables" element={<BasicTables />} />
+                {/* Ui Elements */}
+                <Route path="/alerts" element={<Alerts />} />
+                <Route path="/avatars" element={<Avatars />} />
+                <Route path="/badge" element={<Badges />} />
+                <Route path="/buttons" element={<Buttons />} />
+                <Route path="/images" element={<Images />} />
+                <Route path="/videos" element={<Videos />} />
 
-            {/* Ui Elements */}
-            <Route path="/alerts" element={<Alerts />} />
-            <Route path="/avatars" element={<Avatars />} />
-            <Route path="/badge" element={<Badges />} />
-            <Route path="/buttons" element={<Buttons />} />
-            <Route path="/images" element={<Images />} />
-            <Route path="/videos" element={<Videos />} />
+                {/* Charts */}
+                <Route path="/line-chart" element={<LineChart />} />
+                <Route path="/bar-chart" element={<BarChart />} />
+              </Route>
 
-            {/* Charts */}
-            <Route path="/line-chart" element={<LineChart />} />
-            <Route path="/bar-chart" element={<BarChart />} />
-          </Route>
+              {/* Auth Layout */}
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
 
-          {/* Auth Layout */}
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-
-          {/* Fallback Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+              {/* Fallback Route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </ProductProvider>
+      </Provider>
     </>
   );
 }

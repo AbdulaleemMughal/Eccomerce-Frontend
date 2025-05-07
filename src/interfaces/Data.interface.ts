@@ -1,24 +1,11 @@
-export interface DataInterface {
-  id: number;
-  name: string;
-  price: number;
-  image?: string;
-  discountedPrice: number;
-  description: string;
-  sizes: string[];
-}
-
 export interface ProductInterface {
-  id: number;
+  _id?: string;
   title: string;
-  price: number;
+  price: number | null;
   description: string;
-  discountedPrice: number;
+  discountedPrice: number | null;
   category: string;
   colors: string[];
   sizes: string[];
-  time: string;
-  date: string;
-  createdAt: string;
-  updatedAt: string;
+  image: string;
 }

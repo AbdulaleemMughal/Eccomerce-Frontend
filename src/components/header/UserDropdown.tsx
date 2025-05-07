@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import axios from "axios";
+import { BASE_URL } from "../../utils/constant";
+import { useDispatch } from "react-redux";
+import { pushAdmin } from "../../store/adminSlice";
 
 export default function UserDropdown() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDropdown() {
@@ -13,6 +19,17 @@ export default function UserDropdown() {
   function closeDropdown() {
     setIsOpen(false);
   }
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(BASE_URL + "/logOut", {}, { withCredentials: true });
+      navigate("/");
+      dispatch(pushAdmin(null));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="relative">
       <button
@@ -135,9 +152,9 @@ export default function UserDropdown() {
             </DropdownItem>
           </li>
         </ul>
-        <Link
-          to="/signin"
+        <div
           className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+          onClick={handleLogout}
         >
           <svg
             className="fill-gray-500 group-hover:fill-gray-700 dark:group-hover:fill-gray-300"
@@ -155,7 +172,7 @@ export default function UserDropdown() {
             />
           </svg>
           Sign out
-        </Link>
+        </div>
       </Dropdown>
     </div>
   );

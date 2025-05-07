@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router";
-import { DataInterface } from "../../interfaces/Data.interface";
+import { ProductInterface } from "../../interfaces/Data.interface";
 import Badge from "../ui/badge/Badge";
+import { discountedPercentage } from "../../utils/discountPercentage";
 
 type CardProps = {
-  data: DataInterface;
+  data: ProductInterface;
 };
 
 export const Card = ({ data }: CardProps) => {
@@ -13,20 +14,23 @@ export const Card = ({ data }: CardProps) => {
     <>
       <div
         className="col-span-3 p-2 cursor-pointer max-lg:col-span-6"
-        onClick={() => navigate(`/products/${data.id}`)}
+        onClick={() => navigate(`/products/${data._id}`)}
       >
         <div className="w-full max-w-xs mx-auto">
           {" "}
           <div className="w-full max-h-[298px]">
-            <img
+            {
+              data.image ?  <img
               className="w-full rounded-2xl mix-blend-multiply object-cover"
               src={data?.image}
-              alt={data?.name}
-            />
+              alt={data?.title}
+            /> : <div className="w-full rounded-2xl bg-gray-200"></div>
+            }
+           
           </div>
           <div className="flex flex-col mt-2">
             <h4 className="text-[20px] font-bold dark:text-white ">
-              {data.name}
+              {data.title}
             </h4>
             <div className="flex items-center gap-3">
               <p className="text-[24px] font-bold dark:text-white ">
@@ -37,9 +41,13 @@ export const Card = ({ data }: CardProps) => {
               </span>
               <Badge
                 variant="light"
+                startIcon="-"
                 size="md"
                 color="error"
-                children="-20"
+                children={discountedPercentage(
+                  Number(data?.price),
+                  Number(data?.discountedPrice)
+                )}
                 endIcon="%"
               />
             </div>

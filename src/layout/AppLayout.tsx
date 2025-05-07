@@ -1,11 +1,36 @@
 import { SidebarProvider, useSidebar } from "../context/SidebarContext";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import AppHeader from "./AppHeader";
 import Backdrop from "./Backdrop";
 import AppSidebar from "./AppSidebar";
+import axios from "axios";
+import { BASE_URL } from "../utils/constant";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { pushAdmin } from "../store/adminSlice";
 
 const LayoutContent: React.FC = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
+  const fetchAdmin = async () => {
+    try {
+      const res = await axios.get(BASE_URL + "/profile/veiw", {
+        withCredentials: true,
+      });
+
+      dispatch(pushAdmin(res.data.data));
+
+    } catch (err) {
+      navigate('/');
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAdmin();
+  }, []);
 
   return (
     <div className="min-h-screen xl:flex">

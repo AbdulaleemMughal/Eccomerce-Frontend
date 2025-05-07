@@ -1,5 +1,16 @@
 import { Link } from "react-router";
 
+type CategoryOption = {
+  value: string;
+  label: string;
+};
+
+const categoryOptions: CategoryOption[] = [
+  { value: "mens", label: "Mens" },
+  { value: "womens", label: "Womens" },
+  { value: "kids", label: "Kids" },
+];
+
 interface BreadcrumbProps {
   pageTitle: string | undefined;
 }
@@ -7,12 +18,27 @@ interface BreadcrumbProps {
 const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 mb-6 max-lg:px-3 max-lg:pt-3">
-      <h2
-        className="text-xl font-semibold text-gray-800 dark:text-white/90"
-        x-text="pageName"
-      >
-        {pageTitle}
-      </h2>
+      <div className="flex items-center gap-10">
+        <h2
+          className="text-xl font-semibold text-gray-800 dark:text-white/90"
+          x-text="pageName"
+        >
+          {pageTitle}
+        </h2>
+        {pageTitle === "Mens" && (
+          <select className="border border-black rounded-md p-1">
+            <option value="">Select Cetagory</option>
+            {categoryOptions.map((option) => {
+              return (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              );
+            })}
+          </select>
+        )}
+      </div>
+
       <nav>
         <ol className="flex items-center gap-1.5">
           <li>

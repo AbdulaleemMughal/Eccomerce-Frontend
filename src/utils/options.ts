@@ -16,4 +16,5 @@ export const colorOptions = [
   { value: "red", text: "Red" },
   { value: "green", text: "Green" },
   { value: "black", text: "Black" },
+  { value: "blue", text: "Blue" },
 ];

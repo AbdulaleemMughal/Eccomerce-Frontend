@@ -35,15 +35,8 @@ const navItems: NavItem[] = [
     name: "Products",
     icon: <BsBoxSeam />,
     subItems: [
-      { name: "Mens", path: "/products/men", pro: false },
-      { name: "Womens", path: "/products/women", pro: false },
-      { name: "Childrens", path: "/products/children", pro: false },
+      { name: "All Products", path: "/products/men", pro: false },
     ],
-  },
-  {
-    icon: <FiShoppingCart />,
-    name: "Cart",
-    path: "/product/cart",
   },
   {
     icon: <CalenderIcon />,
