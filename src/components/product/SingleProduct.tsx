@@ -11,7 +11,6 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/constant";
 
 export const SingleProduct = () => {
-
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [singleProduct, setSingleProduct] = useState<ProductInterface>();
@@ -24,7 +23,9 @@ export const SingleProduct = () => {
 
   const deleteProduct = async (id: string) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/delete-product/${id}`, {withCredentials: true});
+      const response = await axios.delete(`${BASE_URL}/delete-product/${id}`, {
+        withCredentials: true,
+      });
       console.log(response);
     } catch (err) {
       console.log("Error While deleting the product", err);
@@ -131,8 +132,9 @@ export const SingleProduct = () => {
                       Select Size
                     </span>
                     <div className="flex gap-2">
-                      {singleProduct?.sizes.map((s) => (
+                      {singleProduct?.sizes.map((s, index) => (
                         <Badge
+                          key={index}
                           children={s}
                           variant="solid"
                           color="light"

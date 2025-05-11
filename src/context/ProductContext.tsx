@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ProductInterface } from "../interfaces/Data.interface";
 import { BASE_URL } from "../utils/constant";
@@ -9,6 +9,8 @@ interface ProductContextType {
   products: ProductInterface[];
   setProducts: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   fetchProducts: () => void;
+  message: string;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const ProductContext = createContext<ProductContextType | null>(null);
@@ -17,6 +19,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
+  const [message, setMessage] = useState<string>("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +39,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <ProductContext.Provider value={{ products, setProducts, fetchProducts }}>
+    <ProductContext.Provider
+      value={{ products, setProducts, fetchProducts, message, setMessage }}
+    >
       {children}
     </ProductContext.Provider>
   );

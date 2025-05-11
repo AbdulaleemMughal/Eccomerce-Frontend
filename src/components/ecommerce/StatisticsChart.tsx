@@ -1,8 +1,13 @@
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import ChartTab from "../common/ChartTab";
+import { useState } from "react";
+import { MonthlySalesInterface } from "../../interfaces/monthlySales.interface";
+import { monthlySales } from "../../utils/sales";
 
 export default function StatisticsChart() {
+  const [sales, setSales] = useState<MonthlySalesInterface[]>(monthlySales);
+
   const options: ApexOptions = {
     legend: {
       show: false, // Hide legend
@@ -61,20 +66,9 @@ export default function StatisticsChart() {
     },
     xaxis: {
       type: "category", // Category-based x-axis
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: sales.map((s) => {
+        return s.month;
+      }),
       axisBorder: {
         show: false, // Hide x-axis border
       },
@@ -108,7 +102,9 @@ export default function StatisticsChart() {
     },
     {
       name: "Revenue",
-      data: [40, 30, 50, 40, 55, 40, 70, 100, 110, 120, 150, 140],
+      data: sales.map((s) => {
+        return s.revenue;
+      }),
     },
   ];
   return (

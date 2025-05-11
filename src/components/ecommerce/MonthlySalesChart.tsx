@@ -4,8 +4,12 @@ import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { MoreDotIcon } from "../../icons";
 import { useState } from "react";
+import { MonthlySalesInterface } from "../../interfaces/monthlySales.interface";
+import { monthlySales } from "../../utils/sales";
 
 export default function MonthlySalesChart() {
+  const [sales, setSales] = useState<MonthlySalesInterface[]>(monthlySales);
+
   const options: ApexOptions = {
     colors: ["#465fff"],
     chart: {
@@ -33,20 +37,9 @@ export default function MonthlySalesChart() {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: sales.map((s) => {
+        return s.month;
+      }),
       axisBorder: {
         show: false,
       },
@@ -88,7 +81,9 @@ export default function MonthlySalesChart() {
   const series = [
     {
       name: "Sales",
-      data: [168, 385, 201, 298, 187, 195, 291, 110, 215, 390, 280, 112],
+      data: sales.map((s) => {
+        return s.revenue;
+      }),
     },
   ];
   const [isOpen, setIsOpen] = useState(false);

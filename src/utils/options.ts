@@ -9,7 +9,7 @@ export const multiOptions = [
 export const options = [
   { value: "mens", label: "Mens" },
   { value: "womens", label: "Womens" },
-  { value: "childrens", label: "Childrens" },
+  { value: "kids", label: "Kids" },
 ];
 
 export const colorOptions = [

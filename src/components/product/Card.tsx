@@ -18,10 +18,10 @@ export const Card = ({ data }: CardProps) => {
       >
         <div className="w-full max-w-xs mx-auto">
           {" "}
-          <div className="w-full max-h-[298px]">
+          <div className="w-full ">
             {
               data.image ?  <img
-              className="w-full rounded-2xl mix-blend-multiply object-cover"
+              className="w-full rounded-2xl mix-blend-multiply object-cover max-h-[298px] max-sm:max-h-[150px]"
               src={data?.image}
               alt={data?.title}
             /> : <div className="w-full rounded-2xl bg-gray-200"></div>
@@ -33,10 +33,10 @@ export const Card = ({ data }: CardProps) => {
               {data.title}
             </h4>
             <div className="flex items-center gap-3">
-              <p className="text-[24px] font-bold dark:text-white ">
+              <p className="text-[24px] font-bold dark:text-white max-sm:text-[18px]">
                 ${data.price}
               </p>
-              <span className=" text-[24px] font-bold text-[#999999] line-through">
+              <span className=" text-[24px] font-bold text-[#999999] line-through max-sm:text-[18px]">
                 ${data.discountedPrice}
               </span>
               <Badge

@@ -25,11 +25,9 @@ export default function Men() {
       <PageBreadcrumb pageTitle="Mens" />
       <div className="min-h-screen rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
         <div className="w-full">
-          {products.length === 0 ? (
+          {products.length === 0 && !products ? (
             <div className="text-center">
-              <div className="py-4 font-bold text-3xl">
-                No Product Found
-              </div>
+              <div className="py-4 font-bold text-3xl">No Product Found</div>
               <Button
                 children="Add Products"
                 variant="outline"

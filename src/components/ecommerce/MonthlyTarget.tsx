@@ -1,12 +1,25 @@
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { MoreDotIcon } from "../../icons";
+import { getSeries } from "../../utils/sales";
 
-export default function MonthlyTarget() {
-  const series = [75.55];
+type MonthlyTargetProps = {
+  revenue: number;
+};
+
+export default function MonthlyTarget({revenue}: MonthlyTargetProps) {
+
+  const [serie, setSerie] = useState<number>(0);
+
+  useEffect(() => {
+    const revenueGenerated = getSeries();
+    setSerie(revenueGenerated)
+  }, []);
+
+  const series = [serie];
   const options: ApexOptions = {
     colors: ["#465FFF"],
     chart: {
@@ -114,7 +127,7 @@ export default function MonthlyTarget() {
           </span>
         </div>
         <p className="mx-auto mt-10 w-full max-w-[380px] text-center text-sm text-gray-500 sm:text-base">
-          You earn $3287 today, it's higher than last month. Keep up your good
+          You earn ${revenue} today, it's higher than last month. Keep up your good
           work!
         </p>
       </div>

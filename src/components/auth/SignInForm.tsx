@@ -16,8 +16,8 @@ export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [error, setError] = useState<string>("");
-  const [email, setEmail] = useState<string>("admin@gmail.com");
-  const [password, setPassword] = useState<string>("admin@12");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleLogin = async () => {
     try {
@@ -32,7 +32,7 @@ export default function SignInForm() {
       dispatch(pushAdmin(res?.data));
       navigate("/dashboard");
     } catch (err: any) {
-      setError(err.response.data.error);
+      setError(err?.response?.data?.error);
     }
   };
 
@@ -103,11 +103,11 @@ export default function SignInForm() {
               </div>
             </div>
             <form
-  onSubmit={(e) => {
-    e.preventDefault();
-    handleLogin();
-  }}
->
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleLogin();
+              }}
+            >
               <div className="space-y-6">
                 <div>
                   <Label>
@@ -143,7 +143,7 @@ export default function SignInForm() {
                   </div>
                 </div>
                 <div className="text-center text-red-700">
-                  <p>{error}</p>
+                  {error && <p>{error}</p>}
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -160,24 +160,17 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm" type="submit" onClick={handleLogin}>
+                  <Button
+                    className="w-full"
+                    size="sm"
+                    type="submit"
+                    onClick={handleLogin}
+                  >
                     Sign in
                   </Button>
                 </div>
               </div>
             </form>
-
-            <div className="mt-5">
-              <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                Don&apos;t have an account? {""}
-                <Link
-                  to="/signup"
-                  className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                >
-                  Sign Up
-                </Link>
-              </p>
-            </div>
           </div>
         </div>
       </div>
